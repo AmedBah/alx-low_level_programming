@@ -1,30 +1,51 @@
 #include "variadic_functions.h"
-#include <stdarg.h>
-#include <stdio.h>
 
 /**
- * print_numbers - Variadic function that prints whatever argument
- * is being passed in
- * @separator: What should separate functions
- * @n: Number of arguments being passed
- * Return: Null
+ * print_all - Prints all of the arguments when specified
+ * @format: specifies the necessary operations
+ * Return: void
  */
-void print_numbers(const char *separator, const unsigned int n, ...)
+
+void print_all(const char * const format, ...)
 {
-	unsigned int i;
-	int num;
-	va_list int_input;
+	int i;
+	int flag;
+	char *str;
+	va_list a_list;
 
-	va_start(int_input, n);
-
-	for (i = 0; i < n; i++)
+	va_start(a_list, format);
+	i = 0;
+	while (format != NULL && format[i] != '\0')
 	{
-		num = va_arg(int_input, int);
-		printf("%d", num);
-
-		if ((i != n - 1) && separator != NULL)
-			printf("%s", separator);
+		switch (format[i])
+		{
+			case 'c':
+				printf("%c", va_arg(a_list, int));
+				flag = 0;
+				break;
+			case 'i':
+				printf("%i", va_arg(a_list, int));
+				flag = 0;
+				break;
+			case 'f':
+				printf("%f", va_arg(a_list, double));
+				flag = 0;
+				break;
+			case 's':
+				str = va_arg(a_list, char*);
+				if (str == NULL)
+					str = "(nil)";
+				printf("%s", str);
+				flag = 0;
+				break;
+			default:
+				flag = 1;
+				break;
+		}
+		if (format[i + 1] != '\0' && flag == 0)
+			printf(", ");
+		i++;
 	}
-	va_end(int_input);
 	printf("\n");
+	va_end(a_list);
 }
