@@ -55,37 +55,31 @@ void print_all(const char * const format, ...)
 	int flag;
 	char *str;
 	va_list a_list;
+	printTypeStruct printType[] = {
+		{ "c", print_char },
+		{ "i", print_int },
+		{ "f", print_float },
+		{ "s", print_str },
+		{ NULL, NULL }
+	};
 
 	va_start(a_list, format);
 	i = 0;
 	while (format != NULL && format[i] != '\0')
 	{
-		switch (format[i])
+		flag = 1;
+		for (int j = 0; printType[j].type != NULL; j++)
 		{
-			case 'c':
-				printf("%c", va_arg(a_list, int));
+			if (*(printType[j].type) == format[i])
+			{
+				printType[j].func(a_list);
 				flag = 0;
 				break;
-			case 'i':
-				printf("%i", va_arg(a_list, int));
-				flag = 0;
-				break;
-			case 'f':
-				printf("%f", va_arg(a_list, double));
-				flag = 0;
-				break;
-			case 's':
-				str = va_arg(a_list, char*);
-				if (str == NULL)
-					str = "(nil)";
-				printf("%s", str);
-				flag = 0;
-				break;
-			default:
-				flag = 1;
-				break;
+			}
 		}
-		if (format[i + 1] != '\0' && flag == 0)
+		if (flag == 1)
+			i++;
+		else if (format[i + 1] != '\0')
 			printf(", ");
 		i++;
 	}
