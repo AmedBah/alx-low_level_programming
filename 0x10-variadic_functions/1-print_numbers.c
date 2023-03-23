@@ -4,26 +4,8 @@
 
 
 /**
- * print_int - prints int
- * @list: arguments from print_all
- */
-void print_int(va_list list)
-{
-	printf("%d", va_arg(list, int));
-}
-
-/**
- * print_float - prints float
- * @list: arguments from print_all
- */
-void print_float(va_list list)
-{
-	printf("%f", va_arg(list, double));
-}
-
-/**
- * print_char - prints int
- * @list: arguments from print_all
+ * print_char - Prints a character
+ * @list: A va_list containing the character to print
  */
 void print_char(va_list list)
 {
@@ -31,15 +13,34 @@ void print_char(va_list list)
 }
 
 /**
- * print_str - prints string
- * @list: arguments from print_all
+ * print_int - Prints an integer
+ * @list: A va_list containing the integer to print
+ */
+void print_int(va_list list)
+{
+	printf("%i", va_arg(list, int));
+}
+
+/**
+ * print_float - Prints a float
+ * @list: A va_list containing the float to print
+ */
+void print_float(va_list list)
+{
+	printf("%lf", va_arg(list, double));
+}
+
+/**
+ * print_str - Prints a string
+ * @list: A va_list containing the string to print
  */
 void print_str(va_list list)
 {
-	char *s = va_arg(list, char *);
+	char *str = va_arg(list, char *);
 
-	s == NULL ? printf("(nil)") : printf("%s", s);
-
+	if (str == NULL)
+		str = "(nil)";
+	printf("%s", str);
 }
 
 /**
