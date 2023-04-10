@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
-
+#include "main.h"
 /**
  * create_file - creates a file with the specified name and writes
  * the specified
